@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.mysql.jdbc.Statement;
+
+import redis.clients.jedis.Transaction;
 
 public class JDBCConnect {
 	public static void main(String[] args) {
@@ -16,6 +19,8 @@ public class JDBCConnect {
 		Connection con = null;
 		//		Statement statement = null;
 		PreparedStatement pStatement  = null;
+		
+		
 		ResultSet result = null;
 		String url = "jdbc:mysql://127.0.0.1:3306/own_test";
 		String username = "root";
@@ -24,6 +29,7 @@ public class JDBCConnect {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(url,username,password);
+			con.setAutoCommit(false);
 			//			if(type==1){
 			pStatement = con.prepareStatement(sql);
 			pStatement.setInt(1, pid);
@@ -40,6 +46,12 @@ public class JDBCConnect {
 				System.out.println(id+"||"+name);
 			}
 		} catch (Exception e) {
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
