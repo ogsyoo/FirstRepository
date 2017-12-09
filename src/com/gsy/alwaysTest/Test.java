@@ -10,9 +10,8 @@ import java.util.UUID;
 public class Test {
 	public static void main(String argv[]) {
 		
+		System.out.println("123");
 		
-		
-		Integer
 		final HashMap<String, String> map = new HashMap<String, String>(2);
 		Thread t = new Thread(new Runnable() {
 		    @Override
