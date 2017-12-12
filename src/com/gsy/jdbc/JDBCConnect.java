@@ -11,6 +11,7 @@ import java.util.List;
 
 public class JDBCConnect {
 	public static void main(String[] args) {
+		System.out.println("测试idea   git提交");
 		String[] arr = new String[1];
 		List<a> list = new ArrayList<a>();
 		for (int i = 0; i < 4; i++) {
