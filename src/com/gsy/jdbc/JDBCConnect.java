@@ -11,10 +11,8 @@ import java.util.List;
 
 public class JDBCConnect {
 	public static void main(String[] args) {
-		System.out.println("测试idea   git提交");
-		String[] arr = new String[1];
 		List<a> list = new ArrayList<a>();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 1; i <= 4; i++) {
 			list.add(new a(i + "", i + ""));
 		}
 		System.out.println("==============");
@@ -108,7 +106,7 @@ public class JDBCConnect {
 	// 获取连接
 	public static Connection getCon(Connection con) {
 		if (con == null) {
-			String url = "jdbc:mysql://127.0.0.1:3306/own_test";
+			String url = "jdbc:mysql://127.0.0.1:3306/gsy_local";
 			String username = "root";
 			String password = "123456";
 			try {
