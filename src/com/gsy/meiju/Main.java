@@ -8,7 +8,6 @@ public class Main {
 		// }
 
 		Enum_001 e = Enum_001.getE(1);
-		System.out.println(Enum_001.city.country.);
 
 		System.out.println(EnumTest.red.compareTo(EnumTest.blue));
 
