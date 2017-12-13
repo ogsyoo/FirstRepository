@@ -101,52 +101,52 @@ public class JDBCConnect {
 		// closeJDBC(conn);
 	}
 
-	public static int addTypes(List<a> babyList) {
-		String sql = "insert into table_stu (id,name) values (?,?) ";
-		Connection conn = getCon(null);
-		try {
-			conn.setAutoCommit(false);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		int result = 0;
-		PreparedStatement stmt = null;
-		try {
-			stmt = conn.prepareStatement(sql);
-			for (int i = 1; i < babyList.size(); i++) {
-				if (i == 2) {
-					stmt.setString(1, "1");
-					stmt.setString(2, "2");
-					stmt.addBatch();
-					continue;
-				}
-				stmt.setString(1, babyList.get(i).getId());
-				stmt.setString(2, babyList.get(i).getName());
-				stmt.addBatch();
-				stmt.executeBatch();
-			}
-			conn.commit();
-		} catch (Exception e) {
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		} finally {
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			closeJDBC(conn);
-		}
-		return result;
-	}
+//	public static int addTypes(List<a> babyList) {
+//		String sql = "insert into table_stu (id,name) values (?,?) ";
+//		Connection conn = getCon(null);
+//		try {
+//			conn.setAutoCommit(false);
+//		} catch (SQLException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		int result = 0;
+//		PreparedStatement stmt = null;
+//		try {
+//			stmt = conn.prepareStatement(sql);
+//			for (int i = 1; i < babyList.size(); i++) {
+//				if (i == 2) {
+//					stmt.setString(1, "1");
+//					stmt.setString(2, "2");
+//					stmt.addBatch();
+//					continue;
+//				}
+//				stmt.setString(1, babyList.get(i).getId());
+//				stmt.setString(2, babyList.get(i).getName());
+//				stmt.addBatch();
+//				stmt.executeBatch();
+//			}
+//			conn.commit();
+//		} catch (Exception e) {
+//			try {
+//				conn.rollback();
+//			} catch (SQLException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//			e.printStackTrace();
+//		} finally {
+//			if (stmt != null) {
+//				try {
+//					stmt.close();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			closeJDBC(conn);
+//		}
+//		return result;
+//	}
 
 	// 获取连接
 	public static Connection getCon(Connection con) {
