@@ -1,5 +1,7 @@
 package com.gsy.meiju;
 
+import java.util.EnumSet;
+
 public enum Enum_001 {
 	city(1,"城市"),
 	prv(2,"sheng"),
@@ -15,16 +17,23 @@ public enum Enum_001 {
 	private String text;
 
 	public static Enum_001 getE(int id) {
-		switch (id) {
-		case 1:
-			return Enum_001.city;
-		case 2:
-			return Enum_001.city;
-		case 3:
-			return Enum_001.city;
-		default:
-			return null;
+		EnumSet<Enum_001> weekSet = EnumSet.allOf(Enum_001.class);
+		for(Enum_001 day:weekSet) {
+			if(day.id==id) {
+				return day;
+			}
 		}
+		return null;
+//		switch (id) {
+//		case 1:
+//			return Enum_001.city;
+//		case 2:
+//			return Enum_001.city;
+//		case 3:
+//			return Enum_001.city;
+//		default:
+//			return null;
+//		}
 	}
 	
 	public int getId() {

@@ -7,8 +7,9 @@ public class Main {
 		// System.out.println(s);
 		// }
 
-		Enum_001 e = Enum_001.getE(1);
-
+		Enum_001 e = Enum_001.getE(2);
+		System.out.println(e.getText());
+		
 		System.out.println(EnumTest.red.compareTo(EnumTest.blue));
 
 		System.out.println(EnumTest.red.color());

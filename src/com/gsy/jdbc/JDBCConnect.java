@@ -13,39 +13,43 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.mysql.jdbc.CallableStatement;
+
 public class JDBCConnect {
 	public static void main(String[] args) {
-		connectJDBC(1);
-		String[] arr = new String[1];
-		List<A> list = new ArrayList<A>();
-		for (int i = 0; i < 4; i++) {
-			list.add(new A(i + "", i,""));
-		}
-		System.out.println("==============");
 		Long time1 = new Date().getTime();
-		addTypes(list);
+		connectJDBC(1);
 		System.out.println(new Date().getTime() - time1);
-		System.out.println("==============");
-//		Connection conn = getCon(null);
-//		if (conn != null) {
-//			System.out.println("连接成功");
-//			// 多线程插入
-//			Long time = new Date().getTime();
-//			for (int i = 0; i < 50; i++) {
-//				Thread t1 = new Thread(new InsertThread(conn, arr));
-//				t1.run();
-//			}
-//			Thread t1 = new Thread(new InsertThread(conn, arr));
-//			Thread t2 = new Thread(new InsertThread(conn, arr));
-//			Thread t3 = new Thread(new InsertThread(conn, arr));
-//			Thread t4 = new Thread(new InsertThread(conn, arr));
-//			t1.run();
-//			t2.run();
-//			t3.run();
-//			t1.run();
-//			System.out.println(new Date().getTime() - time);
-//		}
-//		closeJDBC(conn);
+		// String[] arr = new String[1];
+		// List<A> list = new ArrayList<A>();
+		// for (int i = 0; i < 4; i++) {
+		// list.add(new A(i + "", i,""));
+		// }
+		// System.out.println("==============");
+		// Long time1 = new Date().getTime();
+		// addTypes(list);
+		// System.out.println(new Date().getTime() - time1);
+		// System.out.println("==============");
+		// Connection conn = getCon(null);
+		// if (conn != null) {
+		// System.out.println("连接成功");
+		// // 多线程插入
+		// Long time = new Date().getTime();
+		// for (int i = 0; i < 50; i++) {
+		// Thread t1 = new Thread(new InsertThread(conn, arr));
+		// t1.run();
+		// }
+		// Thread t1 = new Thread(new InsertThread(conn, arr));
+		// Thread t2 = new Thread(new InsertThread(conn, arr));
+		// Thread t3 = new Thread(new InsertThread(conn, arr));
+		// Thread t4 = new Thread(new InsertThread(conn, arr));
+		// t1.run();
+		// t2.run();
+		// t3.run();
+		// t1.run();
+		// System.out.println(new Date().getTime() - time);
+		// }
+		// closeJDBC(conn);
 	}
 
 	// 批量插入
@@ -133,25 +137,35 @@ public class JDBCConnect {
 		String url = "jdbc:mysql://127.0.0.1:3306/gsy_local";
 		String username = "root";
 		String password = "123456";
-		String sql = "SELECT *  from table_stu t";
+		String sql = "insert into table_stu (id,name) values (?,?)";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(url, username, password);
 			con.setAutoCommit(false);
 			// if(type==1){
-			pStatement = (PreparedStatement) con.prepareStatement(sql);
+			for (int i = 0; i < 100; i++) {
+//				pStatement = (PreparedStatement) con.prepareStatement(sql);
+//				pStatement.setString(1, "2");
+//				pStatement.setString(2, "2");
+				CallableStatement cs = (CallableStatement) con.prepareCall("{call NewProc(2,2)}");
+				int j = cs.executeUpdate();
+//				pStatement.executeUpdate();
+				con.commit();
+			}
+
+			// pStatement = (PreparedStatement) con.prepareStatement(sql);
 			// pStatement.setInt(1, pid);
-			result = pStatement.executeQuery();
+			// result = pStatement.executeQuery();
 			// }else{
 			// statement = (Statement) con.createStatement();
 			// sql = sql.replace("?", " ");
 			// result = statement.executeQuery(sql+pid);
 			// }
-			while (result.next()) {
-				int id = result.getInt(1);
-				String name = result.getString(2);
-				System.out.println(id + "||" + name);
-			}
+			// while (result.next()) {
+			// int id = result.getInt(1);
+			// String name = result.getString(2);
+			// System.out.println(id + "||" + name);
+			// }
 		} catch (Exception e) {
 			try {
 				con.rollback();
@@ -165,46 +179,48 @@ public class JDBCConnect {
 
 	}
 
-}
+	{
 
-class A {
-	String id;
-	int name;
-	String type;
-
-	public String getId() {
-		return id;
 	}
 
-	public A() {
-		super();
-	}
+	class A {
+		String id;
+		int name;
+		String type;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+		public String getId() {
+			return id;
+		}
 
-	public int getName() {
-		return name;
-	}
+		public A() {
+			super();
+		}
 
-	public void setName(int name) {
-		this.name = name;
-	}
+		public void setId(String id) {
+			this.id = id;
+		}
 
-	public String getType() {
-		return type;
-	}
+		public int getName() {
+			return name;
+		}
 
-	public void setType(String type) {
-		this.type = type;
-	}
+		public void setName(int name) {
+			this.name = name;
+		}
 
-	public A(String id, int name, String type) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.type = type;
-	}
+		public String getType() {
+			return type;
+		}
 
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		public A(String id, int name, String type) {
+			super();
+			this.id = id;
+			this.name = name;
+			this.type = type;
+		}
+	}
 }
