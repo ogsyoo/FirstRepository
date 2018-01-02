@@ -12,7 +12,6 @@ public class Test {
 		
 		
 		
-		Integer
 		final HashMap<String, String> map = new HashMap<String, String>(2);
 		Thread t = new Thread(new Runnable() {
 		    @Override
